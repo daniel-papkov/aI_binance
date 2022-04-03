@@ -21,21 +21,14 @@ def get_training_data(all_closes,prediction_candles):
     test_data=all_closes[-prediction_candles]
     return test_data
 
-def file_write(file,str):
-    file.write(str)
-    print(str)
-    return
-
 def log(last_price,new_price,prediction):
     now = dt.datetime.now()    
     print('logging!')
-    f = open("buy_or_sell_log.txt", "a")
-    file_write(f,f'\n{last_price} was the last price\n')
-    file_write(f,f'{new_price} is the new price\n')
-    file_write(f,f'{prediction} was the predicted next price\n')
-    file_write(f,f'{now.month}/{now.day} - {now.hour}:{now.minute}:{now.second}\n')    
+    f = open("buy_or_sell_log.txt", "w")
+    f.write(f'\n{last_price} was the last price\n')
+    f.write(f'{new_price} is the new price\n')
+    f.write(f'{prediction} was the predicted next price\n')
+    f.write(f'{now.month}/{now.day} - {now.hour}:{now.minute}:{now.second}\n')    
     f.close()
 
-f = open("buy_or_sell_log.txt", "w")
-f.close()
-#print(log(5,6,7))
+print(log(5,6,7))

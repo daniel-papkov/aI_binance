@@ -19,9 +19,9 @@ from tensorflow.python.keras.saving.save import load_model
 
 from binance.client import Client
 client = Client(config.API_KEY, config.SECRET_KEY)
-symbol='NEARBNB'
+symbol='BTCUSDT'
 prediction_candles_1=60
-prediction_candles_2=60
+prediction_candles_2=60   
 candles = client.get_historical_klines(symbol, Client.KLINE_INTERVAL_1MINUTE, "1 day ago UTC")
 #ohlcv are values returned from get histrical klines
 all_closes=[]
@@ -36,7 +36,7 @@ test_data=all_closes[int((len(all_closes)*2)/3):-1]
 test_data_2=all_closes[int((len(all_closes)*2)/3):-2]
 actual_price=test_data
 actual_price_2=test_data_2
-candles_into_future=10
+candles_into_future=9
 
 x = ai_testing_functions.get_x_train(closes,prediction_candles_1,1)
 x2 = ai_testing_functions.get_x_train(closes,prediction_candles_2,candles_into_future)

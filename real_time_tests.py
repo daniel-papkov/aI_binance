@@ -1,5 +1,3 @@
-import threading
-from coin_info import CoinInfo
 from os import close
 import numpy as np
 import matplotlib.pyplot as plt
@@ -49,28 +47,32 @@ prediction_prices_2 = ai_testing_functions.get_model_predictions(model_2,test_da
 ## from here we need to rebuild it every new candle ? :/
 closes1= all_closes
 closes2=[]
-temp=CoinInfo(symbol)
-add_candles=[]
-real_predict=[]
+temp= client.get_historical_klines(symbol, Client.KLINE_INTERVAL_1MINUTE, "1 hour ago UTC")#initialise
+for kline in temp:
+    closes2.append((float(kline[4])))
 
-while (len(real_predict)<10):
-    try:
-        time.sleep(60)
-        one_before_last = temp.all_closes[-2]
-        last_price =temp.all_closes[-1]
-        last_candles=temp.all_closes[-prediction_candles-2:]
-        last_candles= np.array(last_candles)
-        add_candles.append(last_price)
-        real_predict.append(ai_testing_functions.get_model_predictions(model_2,last_candles,prediction_candles)[0])
-        real_time_test_functions.log(one_before_last,last_price,real_predict[-1])
-    except KeyboardInterrupt:
-        break
+new_candles=[]
+predictions=[]
+new_candles_count=0
+to_log=True
 
-temp.Stop()
+while (new_candles_count<3):
+    while (not real_time_test_functions.is_new_candle(closes1,closes2)):
+        if(to_log):print("waiting for new candles")
+        time.sleep(1)
+        closes2=[]
+        temp= client.get_historical_klines(symbol, Client.KLINE_INTERVAL_1MINUTE, "1 hour ago UTC")#initialise
+        for kline in temp:
+            closes2.append((float(kline[4])))        
+    new_candles.append(closes2[-1])
+    if(to_log):print("got new candle")
+    predictions.append(ai_testing_functions.get_model_predictions(model_2,closes2[-prediction_candles:],prediction_candles))
+    real_time_test_functions.log(closes2[-2],closes[-1],predictions[-1])
+    new_candles_count+=1
 
-plt.plot(temp.all_closes[-(len(real_predict)+1):] , color='red', label='actual candles')
+plt.plot(new_candles , color='red', label='actual candles')
 #plt.plot(prediction_prices , color='blue',label='ai')
-plt.plot(real_predict , color='blue',label='ai')
+plt.plot(predictions , color='yellow',label='ai')
 plt.title(f'{symbol} price prediction')
 plt.xlabel('Time')
 plt.ylabel('Price')
