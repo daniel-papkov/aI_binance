@@ -1,0 +1,12 @@
+
+tickers = client.get_orderbook_tickers();
+fee_multiplier = float(1)
+fee_ask_bid = float(0);
+for ticker in tickers:
+    if  ticker['symbol'] == symbol:
+        fee_ask_bid = (float(ticker['bidPrice']) / float(ticker['askPrice'])) - float(1)
+        fee_multiplier -= (0.001 - (fee_ask_bid / 2.0) )
+        print(fee_multiplier  )
+
+#balance = BUY PRICE / fee_multiplier
+#balance = SELL PRICE * fee_multiplier

@@ -1,0 +1,50 @@
+
+34043.60000000 was the last price
+34043.23000000 is the new price
+[33956.723] was the predicted next price
+7/6 - 18:20:50
+
+34008.01000000 was the last price
+34003.16000000 is the new price
+[33982.914] was the predicted next price
+7/6 - 18:21:50
+
+33997.00000000 was the last price
+34006.97000000 is the new price
+[34009.195] was the predicted next price
+7/6 - 18:22:50
+
+33997.00000000 was the last price
+34008.93000000 is the new price
+[34032.188] was the predicted next price
+7/6 - 18:23:50
+
+34025.70000000 was the last price
+34007.03000000 is the new price
+[34049.5] was the predicted next price
+7/6 - 18:24:50
+
+34004.45000000 was the last price
+34014.14000000 is the new price
+[34060.406] was the predicted next price
+7/6 - 18:25:50
+
+34001.12000000 was the last price
+34064.58000000 is the new price
+[34065.062] was the predicted next price
+7/6 - 18:26:50
+
+34053.57000000 was the last price
+34057.89000000 is the new price
+[34064.234] was the predicted next price
+7/6 - 18:27:50
+
+34061.60000000 was the last price
+34067.76000000 is the new price
+[34059.754] was the predicted next price
+7/6 - 18:28:50
+
+34067.55000000 was the last price
+34094.71000000 is the new price
+[34053.746] was the predicted next price
+7/6 - 18:29:50

@@ -1,0 +1,4 @@
+x_train = values we train with -> first 60% of data
+y_train = what the model is comparing itself to and learning off
+x_test = data we give to test accuracy of the model -> last 40% of the data
+y_test = what the model learned -> need to check here for acc
