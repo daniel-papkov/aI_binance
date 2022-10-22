@@ -1,28 +1,34 @@
 from os import close
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 import pandas_datareader as web
 import datetime as dt
-import binance
-from tensorflow.python.framework.auto_control_deps import _ORDER_INSENSITIVE_STATEFUL_OPS
+
 from tensorflow.python.keras.backend import shape
 from tensorflow.python.keras.engine import sequential
-import config,testing_functions,ai_testing_functions
+import config
+import testing_functions
+import ai_testing_functions
 
 from sklearn.preprocessing import  MinMaxScaler
-from tensorflow.keras.layers import Dense,Dropout,LSTM
-from tensorflow.keras.models import Sequential
+
+import tensorflow as tf
+from tensorflow import keras
+
+from tensorflow.python.keras.layers import Dense,LSTM,Dropout
 from tensorflow.python import client
 from tensorflow.python.keras.saving.hdf5_format import load_model_from_hdf5
 from tensorflow.python.keras.saving.save import load_model
 
-from binance.client import Client
+#from binance.client import Client
+from binance import Client
+
 client = Client(config.API_KEY, config.SECRET_KEY)
 symbol='BTCUSDT'
 prediction_candles_1=60
 prediction_candles_2=60   
-candles = client.get_historical_klines(symbol, Client.KLINE_INTERVAL_1MINUTE, "1 day ago UTC")
+#candles = client.get_historical_klines(symbol, Client.KLINE_INTERVAL_1MINUTE, "30 day ago UTC")
+candles = client.get_historical_klines(symbol, Client.KLINE_INTERVAL_15MINUTE, "30 day ago UTC")
 #ohlcv are values returned from get histrical klines
 all_closes=[]
 for kline in candles:
@@ -53,7 +59,7 @@ fee=testing_functions.calc_fee(symbol)
 
 actual_price_2=actual_price_2[prediction_candles_2+1:]
 
-prediction_prices_2=prediction_prices_2[candles_into_future-1:]#for some reason the n-th day is what will      
+prediction_prices_2=prediction_prices_2[candles_into_future-1:]      
 print(testing_functions.check_profits_test_const_fee(prediction_prices_2,prices_2,symbol,1,1,fee,False))
 #plt.plot(actual_price , color='red', label='actual price 1')     #actually happend on the what is supposed to be the first prediction
 plt.plot(actual_price_2 , color='black', label='actual price 2')

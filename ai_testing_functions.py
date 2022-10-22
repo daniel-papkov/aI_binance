@@ -4,22 +4,25 @@ import pandas as pd
 import pandas_datareader as web
 import datetime as dt
 import binance
-from tensorflow.python.framework.auto_control_deps import _ORDER_INSENSITIVE_STATEFUL_OPS
+import tensorflow as tf
+#from tensorflow.python.framework.auto_control_deps import _ORDER_INSENSITIVE_STATEFUL_OPS
 from tensorflow.python.keras.backend import shape
 import config,testing_functions
 
 
 from sklearn.preprocessing import  MinMaxScaler
-from tensorflow.keras.layers import Dense,Dropout,LSTM
-from tensorflow.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense,LSTM,Dropout
+from tensorflow.python.keras.engine import sequential
 from tensorflow.python import client
 from tensorflow.python.keras.saving.hdf5_format import load_model_from_hdf5
 from tensorflow.python.keras.saving.save import load_model
 
-from binance.client import Client
+from binance import Client
+
+client = Client(config.API_KEY, config.SECRET_KEY)
 
 def build_model(x_train,y_train):        
-    model= Sequential()
+    model = tf.keras.Sequential()
     model.add(LSTM(units=100,return_sequences=True,input_shape=(x_train.shape[1],1)))
     model.add(Dropout(0.2))
     model.add(LSTM(units=100,return_sequences=True)) 
@@ -77,3 +80,5 @@ def get_model_predictions_n_build_all_closes(all_closes,prediction_candles,days_
     y = get_y_train(all_closes[:len(all_closes)*x_train_per],days_into_future)
     model= build_model(x,y)
     return get_model_predictions(model,test_data,prediction_candles)
+
+    
