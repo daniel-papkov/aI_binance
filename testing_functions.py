@@ -1,8 +1,8 @@
 import datetime as dt
 import config
-import binance
-from binance.client import Client
-
+from binance import Client
+#client = Client(config.API_KEY_key, config.SECRET_KEY)
+client = Client(config.API_KEY, config.SECRET_KEY)
 def total_gain_possible(closes):
     start = closes[0]
     possible = 1.0
@@ -136,7 +136,7 @@ def compare_ai_to_irl(action,cur_price):#tax is done in another function not her
         return 0.0
 
 def calc_fee(symbol):
-    client = Client(config.API_KEY, config.SECRET_KEY)
+    #client = Client(config.API_KEY, config.SECRET_KEY)
     ticker = client.get_orderbook_ticker(symbol = symbol)
     fee_original = client.get_trade_fee(symbol = symbol)[0]
     fee_ask_bid = (float(ticker['bidPrice']) / float(ticker['askPrice'])) - float(1)
@@ -314,7 +314,7 @@ def check_profits_test_const_fee(prediction_prices,prices,symbol,holdbuy_percent
 # a+=compare_ai_to_irl(buy_or_Sell_action(500,530,550,0),520)
 # print(a)
 
-#print(calc_fee('BTCUSDT'))
+##print(calc_fee('BTCUSDT'))
 
 print()
 print()
